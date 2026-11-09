@@ -10,4 +10,4 @@ It was found that the relation of the six demograpghic variables to voting outco
 In conclusion, the data presented in this report shows that the relation between demographic data and partisan voting outcomes is highly mediated by the particularities of geographic location – both in terms of that location’s urban, rural, or intermediate status, and in terms of its spatial relation to other areas. There is the possibility that some of these particularities are due to irreducible cultural or historical characteristics specific to geographic locality. This report has shown that much more can be learned by studying the particularity and nuance of these geographic locals and indicates any analysis of partisan voting patterns should consider these particularities of locality.
 
 ## Video Presentation
-![video presentation](https://beckmatthew.github.io/votingSpatialAnalysis/VideoPresentation.mp4)
+https://beckmatthew.github.io/votingSpatialAnalysis/VideoPresentation.mp4
