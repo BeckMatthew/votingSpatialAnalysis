@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Matthew Beck">
+
+<title>Final Project</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="FinalProject_files/libs/clipboard/clipboard.min.js"></script>
+<script src="FinalProject_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="FinalProject_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="FinalProject_files/libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="FinalProject_files/libs/quarto-html/popper.min.js"></script>
+<script src="FinalProject_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="FinalProject_files/libs/quarto-html/anchor.min.js"></script>
+<link href="FinalProject_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="FinalProject_files/libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="FinalProject_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="FinalProject_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="FinalProject_files/libs/bootstrap/bootstrap-950e01193a9b78174303ac6eafc8383c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Final Project</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Matthew Beck </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This project analyzes voting results from the 2020 Presidential Election in Georgia and seeks to find geographic patterns in these data. Previous studies have shown that a key factor in the geographic distribution of voting patterns is the relationship between urban and rural areas. This report will study this relationship by classifying voting precincts into low, medium, and high density groups as a way to measure the urban/rural character of these precincts.</p>
+<p>The state of Georgia was selected as an area of study for two reasons. First, I am familiar with the geography of the state. Second, Georgia has both highly urban areas in the vicinity of the Atlanta Metropolitan area and highly rural areas outside of Atlanta.</p>
+<p>Prior surveys have also measured demographic correlates with voting patterns. For example, those with higher education tend to vote for Democratic Candidates. Polls have also shown that black and Hispanic Americans tend to vote for Democrats as well. This study will analyze these variables at the level of areal units and attempt to determine if the relationship between these correlates and the partisan voting outcomes hold across all geographic locations in the State of Georgia, particularly considering the differing urban and rural status of these locations.</p>
+</section>
+<section id="import-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="import-libraries">Import libraries</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidycensus)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatialreg)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(units)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geojsonsf)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tigris)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GWmodel)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(marginaleffects)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">readRenviron</span>(<span class="st">"~/.Renviron"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="import-demographic-data" class="level2">
+<h2 class="anchored" data-anchor-id="import-demographic-data">Import Demographic Data</h2>
+<p>Demographic Data is pulled from the US Census Bureau via the tidycensus API for the 2020 ACS 5-year dataset. Demographic data is obtained at the block group level, which is the finest detail that these data are available. This project will consider 6 demographic variables in three groups:</p>
+<p>Race and ethnicity: (1) the ratio of the black to the total population and (2) the ratio of the Hispanic population to the total population</p>
+<p>Education: (3) the ratio of people whose highest educational attainment is a bachelors degree to the total population and (4) the ratio of people holding graduate degrees (Masters, Doctoral, or Professional degrees) to the total population</p>
+<p>Income: (5) the ratio of the population that is considered to be impoverished and (6) the median income of the geographical unit</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>year <span class="ot">=</span> <span class="dv">2020</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B01003_001E"</span>, <span class="co"># Total Population</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Income and Wealth related</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B19113_001E"</span>, <span class="co"># Estimate!!Median family income in the past 12 months (in 2020 inflation-adjusted dollars) </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B17010_001E"</span>, <span class="co">#  Estimate!!Total:</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B17010_002E"</span>, <span class="co">#Estimate!!Total:!!Income in the past 12 months below poverty level:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Education Related</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B15003_001E"</span>,  <span class="co">#Estimate!!Total:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B15003_022E"</span>,    <span class="co">#Estimate!!Total:!!Bachelors degree</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B15003_023E"</span>,    <span class="co">#Estimate!!Total:!!Master's degree  </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B15003_024E"</span>,    <span class="co">#Estimate!!Total:!!Professional school degree   </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B15003_025E"</span>,    <span class="co">#Estimate!!Total:!!Doctorate degree</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Race and Ethnicity</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B02001_001E"</span>, <span class="co"># Estimate!!Total:           </span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B02001_003E"</span>, <span class="co">#Estimate!!Total:!!Black or African American alone</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">#HISPANIC OR LATINO ORIGIN BY RACE</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B03002_001E"</span>, <span class="co">#Estimate!!Total:</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B03002_012E"</span> <span class="co">#Estimate!!Total:!!Hispanic or Latino:</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>acs_blockGroups <span class="ot">=</span>  <span class="fu">get_acs</span>(</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">geography =</span> <span class="st">"cbg"</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">geometry =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">output =</span> <span class="st">"wide"</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="st">"georgia"</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> vars,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">survey =</span> <span class="st">"acs5"</span>,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> year</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>)  <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">32617</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>acs_blockGroups <span class="ot">=</span> acs_blockGroups <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">area =</span> <span class="fu">st_area</span>(geometry),</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">density =</span> B01003_001E <span class="sc">/</span> (area <span class="sc">%&gt;%</span> <span class="fu">set_units</span>(km<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">%&gt;%</span> <span class="fu">replace_na</span>(<span class="dv">0</span>)<span class="sc">%&gt;%</span> <span class="fu">drop_units</span>(),</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">medIncome =</span> B19113_001E,</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">bachelors =</span> B15003_022E <span class="sc">/</span> B15003_001E,</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">grad =</span> (B15003_023E <span class="sc">+</span> B15003_024E <span class="sc">+</span> B15003_025E) <span class="sc">/</span> B15003_001E,</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">black =</span> B02001_003E <span class="sc">/</span> B02001_001E,</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">hispanic =</span> B03002_012E <span class="sc">/</span> B03002_001E,</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">poverty =</span> B17010_002E <span class="sc">/</span> B17010_001E,</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>acs_blockGroups <span class="ot">=</span> acs_blockGroups <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">densityCategory =</span> <span class="fu">ifelse</span>(density <span class="sc">&gt;</span> <span class="dv">1000</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>))</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>metroATL <span class="ot">&lt;-</span> tigris<span class="sc">::</span><span class="fu">counties</span>(<span class="at">state=</span><span class="st">"GA"</span>,<span class="at">cb=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">32617</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Fulton|Gwinnett|Cobb|DeKalb|Clayton"</span>,NAME)) <span class="co">#Shape containing the borders of the 5 counties which make up Metro Atlanta</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>metroATL_bb <span class="ot">=</span> <span class="fu">st_bbox</span>(metroATL<span class="sc">%&gt;%</span> <span class="fu">st_buffer</span>(units<span class="sc">::</span><span class="fu">set_units</span>(<span class="dv">3</span>,mi)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Below are the summaries of the densities of the block groups as well the six variables that will be considered.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(acs_blockGroups <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(density, black, hispanic, bachelors, grad, poverty, medIncome))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    density             black            hispanic         bachelors     
+ Min.   :    0.00   Min.   :0.00000   Min.   :0.00000   Min.   :0.0000  
+ 1st Qu.:   96.46   1st Qu.:0.05392   1st Qu.:0.00000   1st Qu.:0.0778  
+ Median :  486.41   Median :0.22568   Median :0.03524   Median :0.1538  
+ Mean   :  846.39   Mean   :0.32664   Mean   :0.09030   Mean   :0.1889  
+ 3rd Qu.: 1083.62   3rd Qu.:0.54369   3rd Qu.:0.11274   3rd Qu.:0.2759  
+ Max.   :25702.75   Max.   :1.00000   Max.   :1.00000   Max.   :1.0000  
+ NAs    :5          NAs    :15        NAs    :15        NAs    :15      
+      grad            poverty          medIncome     
+ Min.   :0.00000   Min.   :0.00000   Min.   :  2499  
+ 1st Qu.:0.03439   1st Qu.:0.00000   1st Qu.: 51308  
+ Median :0.08494   Median :0.07008   Median : 71870  
+ Mean   :0.12144   Mean   :0.12249   Mean   : 82600  
+ 3rd Qu.:0.17556   3rd Qu.:0.18174   3rd Qu.:101515  
+ Max.   :1.00000   Max.   :1.00000   Max.   :250001  
+ NAs    :15        NAs    :36        NAs    :1000    </code></pre>
+</div>
+</div>
+<p>Below are maps showing the population density across all block groups in the state of Georgia. The second map shows a close-up of the Atlanta Metropolitan area. All maps provided in this report will also include a second variation that shows a close up of the Metro Atlanta region with overlays of the county boundaries of the five counties closest to the city of Atlanta: Fulton, Gwinnett, Cobb, DeKalb, and Clayton counties. Population density will be used as a key factor in classifying areas as urban, rural, and intermediate.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mapDensity <span class="ot">=</span> <span class="fu">tm_shape</span>(acs_blockGroups) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"density"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous_pseudo_log</span>())<span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Population density (log scale)"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>mapDensityAtl <span class="ot">=</span> <span class="fu">tm_shape</span>(acs_blockGroups, <span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"density"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous_pseudo_log</span>())<span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Population density (Log Scale - Metro Atlanta Area)"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(mapDensity,mapDensityAtl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="precinct-level-voting-data" class="level2">
+<h2 class="anchored" data-anchor-id="precinct-level-voting-data">Precinct-level voting data</h2>
+<p>Next, the voting results at the precinct level are obtained. This is the most granular level at which voting results are available. Unfortunately, there are difficulties in obtaining and using these data. These data are collected and managed at a state-level and so there is no national-level repository of precinct voting data and obtaining it depends on contacting each state’s department of elections. Fortunately, the New York Times’ “The Upshot” has gone through the effort of compiling all data for the 2020 election and has made it freely available on GitHub. (see: https://github.com/TheUpshot/presidential-precinct-map-2020)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>precinctVoting <span class="ot">=</span> <span class="fu">read_file</span>(<span class="st">"/home/matt/Documents/School/2024 - 2026 UWF/2025 - 2026/Fall 2025/STA 6990/Final Project/precincts-with-results.geojson"</span>) <span class="sc">%&gt;%</span> <span class="fu">geojson_sf</span>() <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">substr</span>(GEOID,<span class="dv">1</span>,<span class="dv">2</span>) <span class="sc">==</span> <span class="st">"13"</span>)<span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">32617</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>precinctVoting <span class="ot">=</span> precinctVoting <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">demRatio =</span> votes_dem<span class="sc">/</span>(votes_dem <span class="sc">+</span> votes_rep)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The map shown depicts partisan makeup of votes in each precinct. Areas that leaned Democratic are colored blue and areas that leaned Republican are colored red. The scale corresponds to the ratio of democratic votes / (democratic + republican votes). A value of 1 indicates all votes in the precinct were democratic, 0.5 indicates an even split, and 0 indicates all were republican. Third-party votes are not included in this analysis, however the total number of third-party votes is negligible.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"plot"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>demLead <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctVoting) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"demRatio"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="fl">0.5</span>,<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>, <span class="st">"blue"</span>)),<span class="at">fill_legend=</span><span class="fu">tm_legend</span>(<span class="at">position=</span><span class="st">"right"</span>))<span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Democratic Lead Percentage"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>demLeadAtl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctVoting, <span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"demRatio"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="fl">0.5</span>,<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>, <span class="st">"blue"</span>)),<span class="at">fill_legend=</span><span class="fu">tm_legend</span>(<span class="at">position=</span><span class="fu">tm_pos_out</span>(<span class="at">pos.v =</span> <span class="st">"center"</span>)))<span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Democratic Lead Percentage (Metro Atlanta Area)"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(demLead, demLeadAtl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="interpolate-census-data-to-voting-precincts" class="level2">
+<h2 class="anchored" data-anchor-id="interpolate-census-data-to-voting-precincts">Interpolate census data to voting precincts</h2>
+<p>Voting precincts do not line up with any census geometry. The voting precincts are usually designed for ease of voting. For example, voting may be held at a local school, church, or community center, and a voting precinct is all people nearby to this polling location. In order to match the demographic data provided by the ACS, the demographic data from the census is interpolated using the interpolate_pw() function from tidycensus. This function uses population-weighted interpolation where the weights are drawn from the census block dataset from TIGRIS to determine the population distribution within the block group and voting precinct geometries.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>GA_blocks <span class="ot">=</span> <span class="fu">get_decennial</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">geography =</span> <span class="st">"block"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"H1_001N"</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">geometry =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="st">"georgia"</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)<span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">32617</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_use_s2</span>(<span class="cn">FALSE</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated <span class="ot">=</span> <span class="fu">interpolate_pw</span>(<span class="at">from =</span> acs_blockGroups<span class="sc">%&gt;%</span> <span class="fu">select</span>(GEOID,density, medIncome, bachelors, grad, black, hispanic, poverty), </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">to =</span> precinctVoting, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">weights =</span> GA_blocks, </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">extensive=</span>F,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">to_id =</span> <span class="st">"GEOID"</span>,<span class="at">weight_column =</span> <span class="st">"value"</span>)  <span class="sc">%&gt;%</span> <span class="fu">full_join</span>(precinctVoting <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>(), <span class="at">by=</span><span class="st">"GEOID"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>A map showing the black population is displayed at both the census block group level and the interpolated voting precinct level to demonstrate that the original map and interpolated map visually appear to be similar to verify that the interpolation was successful.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mapBlackRatioACS <span class="ot">=</span> <span class="fu">tm_shape</span>(acs_blockGroups) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"black"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>())<span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Black Population ratio (2020 ACS 5-year)"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mapBlackRatioInter <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"black"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Black Population ratio interpolated to Voting Precincts"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>mapBlackRatioACSAtl <span class="ot">=</span> <span class="fu">tm_shape</span>(acs_blockGroups, <span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"black"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>())<span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Black Population ratio (2020 ACS 5-year)"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>mapBlackRatioInterAtl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"black"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Black Population ratio interpolated to Voting Precincts"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(precinctsInterpolated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       GEOID         density            medIncome        bachelors      
+ Length   :2653   Min.   :4.147e-01   Min.   : 13720   Min.   :0.00000  
+ N.unique :2653   1st Qu.:5.218e+01   1st Qu.: 54856   1st Qu.:0.09173  
+ N.blank  :   0   Median :4.275e+02   Median : 71156   Median :0.15409  
+ Min.nchar:   7   Mean   :7.319e+02   Mean   : 81249   Mean   :0.18524  
+ Max.nchar:  43   3rd Qu.:1.029e+03   3rd Qu.: 96658   3rd Qu.:0.25372  
+                  Max.   :1.533e+04   Max.   :250001   Max.   :0.63399  
+                  NAs    :6           NAs    :41       NAs    :6        
+      grad             black            hispanic          poverty       
+ Min.   :0.00000   Min.   :0.00000   Min.   :0.00000   Min.   :0.00000  
+ 1st Qu.:0.05227   1st Qu.:0.08321   1st Qu.:0.01813   1st Qu.:0.03787  
+ Median :0.09014   Median :0.23391   Median :0.04550   Median :0.09112  
+ Mean   :0.12223   Mean   :0.32531   Mean   :0.07570   Mean   :0.11567  
+ 3rd Qu.:0.16172   3rd Qu.:0.50274   3rd Qu.:0.09740   3rd Qu.:0.16518  
+ Max.   :0.55117   Max.   :1.00000   Max.   :0.80634   Max.   :0.68696  
+ NAs    :6         NAs    :6         NAs    :6         NAs    :6        
+   votes_dem        votes_rep        votes_total    votes_per_sqkm    
+ Min.   :   0.0   Min.   :    0.0   Min.   :    0   Min.   :     0.0  
+ 1st Qu.: 283.0   1st Qu.:  251.0   1st Qu.:  865   1st Qu.:    16.1  
+ Median : 754.0   Median :  691.0   Median : 1629   Median :   146.9  
+ Mean   : 932.7   Mean   :  927.9   Mean   : 1884   Mean   :   392.4  
+ 3rd Qu.:1368.0   3rd Qu.: 1249.0   3rd Qu.: 2528   3rd Qu.:   439.9  
+ Max.   :6428.0   Max.   :12163.0   Max.   :15531   Max.   :200591.0  
+                                                                      
+  pct_dem_lead        demRatio                geometry   
+ Min.   :-96.500   Min.   :0.01754   MULTIPOLYGON :   6  
+ 1st Qu.:-47.800   1st Qu.:0.25780   POLYGON      :2647  
+ Median : -5.100   Median :0.47413   epsg:32617   :   0  
+ Mean   :  1.232   Mean   :0.50632   +proj=utm ...:   0  
+ 3rd Qu.: 49.600   3rd Qu.:0.75048                       
+ Max.   :100.000   Max.   :1.00000                       
+ NAs    :3         NAs    :3                             </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(mapBlackRatioACS, mapBlackRatioACSAtl, mapBlackRatioInter, mapBlackRatioInterAtl, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A categorical variable is added to describe the population density of the precinct. A density of greater than 1500 persons/km^2 is classified as “high”, between 200 and 1500 is “medium” and less than 200 is “low”. This categorical variable is intended to measure the urban or rural characteristic of the precinct. The “high” density precincts are roughly those in urban areas, mainly in the metropolitan Atlanta region, but also in Savannah, Augusta, and Athens. The majority of the land area of the state is the low-density rural areas. The intermediate density areas are intended to cover the suburban areas - primarily in the metropolitan Atlanta region - but this category also includes many of the smaller cities located throughout the state as well.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated <span class="ot">=</span> precinctsInterpolated <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">densityCategory =</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(density<span class="sc">&gt;</span><span class="dv">1500</span>,<span class="st">"high"</span>,<span class="fu">ifelse</span>(density<span class="sc">&gt;</span><span class="dv">200</span>,<span class="st">"medium"</span>,<span class="st">"low"</span>)))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>map_highden <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill =</span><span class="st">"densityCategory"</span>) <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Density Classification of Voting Precincts"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>map_highden_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill =</span><span class="st">"densityCategory"</span>)<span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>()<span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Density Classification (Metro Atlanta)"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_highden,map_highden_Atl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA <span class="ot">=</span> precinctsInterpolated <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Maps are now shown of all six demographic variables that are covered in this report:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mapBlackRatioInter <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"black"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>())<span class="sc">+</span> <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>,<span class="st">"top"</span>)) <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Black Population Ratio"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mapBlackRatioInterAtl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"black"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>()<span class="sc">+</span><span class="fu">tm_legend_hide</span>() <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Black Population Ratio (Metro Atlanta)"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>map_Hispanic <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"hispanic"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>())<span class="sc">+</span> <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>,<span class="st">"top"</span>)) <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Hispanic Population Ratio"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>map_Hispanic_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"hispanic"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>()<span class="sc">+</span><span class="fu">tm_legend_hide</span>() <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Hispanic Population Ratio (Metro Atlanta)"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(mapBlackRatioInter, mapBlackRatioInterAtl, map_Hispanic, map_Hispanic_Atl, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>map_bachelors <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"bachelors"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>())<span class="sc">+</span> <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>,<span class="st">"top"</span>)) <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Bachelors Degree Ratio"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>map_bachelors_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"bachelors"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>()<span class="sc">+</span><span class="fu">tm_legend_hide</span>() <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Bachelors Degree Ratio (Metro Atlanta)"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>map_grad <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"grad"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span> <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>,<span class="st">"top"</span>)) <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Graduate Degree Ratio"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>map_grad_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"grad"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL)<span class="sc">+</span><span class="fu">tm_legend_hide</span>() <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Graduate Degree Ratio (Metro Atlanta)"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_bachelors,map_bachelors_Atl, map_grad, map_grad_Atl, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>map_poverty <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"poverty"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span> <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>,<span class="st">"top"</span>)) <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Poverty Ratio"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>map_poverty_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"poverty"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL)<span class="sc">+</span><span class="fu">tm_legend_hide</span>() <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Poverty Ratio (Metro Atlanta)"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>map_income <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"medIncome"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span> <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>,<span class="st">"top"</span>)) <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Median Income"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>map_income_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"medIncome"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>()<span class="sc">+</span><span class="fu">tm_legend_hide</span>() <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Median Income (Metro Atlanta)"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_poverty, map_poverty_Atl, map_income, map_income_Atl, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Some observations about the spatial distribution of these six variables:</p>
+<ul>
+<li><p>The black population ratio is highest in southern parts of metro Atlanta, though it is not very high in the northern part of metro Atlanta. The northernmost part of the state has a very low black population ratio. There is a large belt going East to West through the middle part of the state that has a high black population; this horizontal belt and density in Atlanta visually matches very closely with the above partisan voting map, where the black areas correspond to the democratic-voting areas. It is not an exact match, though because the northern part of Metro Atlanta has a low black population ratio but voted highly democratic.</p></li>
+<li><p>The Hispanic population ratio is mostly low throughout the state but there are a few clusters where there is a high ratio (including part of the Atlanta metro).</p></li>
+<li><p>The two education variables are highest in the Atlanta Metro, but low throughout the rest of the state. The pattern in the Atlanta Metro is reversed from the black population ratio - the northern parts of the metro area (Buckhead and Sandy Springs) have a higher education, while the southern areas of the metro area have lower education levels. Higher education levels are also visible at locations of universities visible throughout the state. For example, there are multiple universities in downtown Atlanta including Georgia Tech, Georgia State, and Emory. The University of Georgia is visible in Athens, GA, about 70 miles east of Atlanta.</p></li>
+<li><p>While there are some small areas in the Atlanta Metro with high poverty and low income, overall the Atlanta Metro has low poverty and high income while the rest of the state has higher poverty and lower income. The northern parts of Atlanta Metro area (Buckhead and Sandy Springs) has the highest income in the whole state, corresponding to the areas in the metro area with high education. The southern half of the state appears to have the most poverty</p></li>
+</ul>
+</section>
+<section id="morans-i-of-response-variable" class="level2">
+<h2 class="anchored" data-anchor-id="morans-i-of-response-variable">Moran’s I of response variable</h2>
+<p>A Moran’s I test is run on the response variable (ratio of Democratic Votes). The hypothesis test shows strong evidence of spatial distribution of the response variable.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nb <span class="ot">=</span> <span class="fu">poly2nb</span>(precinctsInterpolated_rmNA)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ww <span class="ot">=</span> <span class="fu">nb2listw</span>(nb, <span class="at">style=</span><span class="st">"W"</span>, <span class="at">zero.policy =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(precinctsInterpolated_rmNA<span class="sc">$</span>demRatio, ww, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Moran I test under randomisation
+
+data:  precinctsInterpolated_rmNA$demRatio  
+weights: ww    
+
+Moran I statistic standard deviate = 70.945, p-value &lt; 2.2e-16
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance 
+     0.8228334639     -0.0003831418      0.0001346434 </code></pre>
+</div>
+</div>
+<p>The Local Moran’s I of the precincts is plotted below. There is evidence of geographic pattern throughout the state.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>local_I <span class="ot">=</span> <span class="fu">localmoran</span>(precinctsInterpolated_rmNA<span class="sc">$</span>demRatio, ww, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA<span class="sc">$</span>Local_I <span class="ot">=</span> local_I[, <span class="st">"Ii"</span>]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA<span class="sc">$</span>Local_I_p <span class="ot">=</span> local_I[, <span class="st">"Pr(z &gt; E(Ii))"</span>]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>map_Moran_1 <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"Local_I"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Local I of response variable"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>map_Moran_1_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA, <span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"Local_I"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>()) <span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Local I of response variable (Metro Atlanta Area)"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_Moran_1,map_Moran_1_Atl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="high-high-and-low-low-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="high-high-and-low-low-clusters">High-High and Low-Low Clusters</h3>
+<p>The significant clusters found are mapped below. There appears to be a large Democratic-leaning cluster in the Metro Atlanta Area and numerous smaller ones throughout the state in the smaller cities (Athens, Savannah, Macon, Columbus, etc). The northern part of the state and the southern part of the state form two large Republican voting clusters. Notably, the Moran’s I is not significant in the ring of suburbs surrounding Atlanta nor in the horizontal belt with a high black population.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> <span class="fu">scale</span>(precinctsInterpolated_rmNA<span class="sc">$</span>demRatio, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)[,<span class="dv">1</span>]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>lag_z <span class="ot">=</span> <span class="fu">lag.listw</span>(ww, z)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA <span class="ot">&lt;-</span> precinctsInterpolated_rmNA <span class="sc">%&gt;%</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">LISA_type =</span> <span class="fu">case_when</span>(</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>      z <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> lag_z <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"High-High"</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>      z <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> lag_z <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"Low-Low"</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>      z <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> lag_z <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"High-Low"</span>,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>      z <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> lag_z <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"Low-High"</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA<span class="sc">$</span>LISA_type <span class="ot">=</span> <span class="fu">ifelse</span>(precinctsInterpolated_rmNA<span class="sc">$</span>Local_I_p <span class="sc">&lt;=</span> <span class="fl">0.05</span>, precinctsInterpolated_rmNA<span class="sc">$</span>LISA_type, <span class="st">"Not significant"</span>)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>map_Lisa1 <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA) <span class="sc">+</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LISA_type"</span>,</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"High-High"</span><span class="ot">=</span><span class="st">"#377EB8"</span>, <span class="st">"Low-Low"</span><span class="ot">=</span><span class="st">"#E41A1C"</span>,</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>                <span class="co">#"High-Low"="#4DAF4A", "Low-High"="#984EA3",</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Not significant"</span><span class="ot">=</span><span class="st">"gray"</span>),</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"LISA cluster type"</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span>  <span class="fu">tm_title</span>(<span class="st">"LISA cluster type"</span>)</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>map_Lisa1_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LISA_type"</span>,</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"High-High"</span><span class="ot">=</span><span class="st">"#377EB8"</span>, <span class="st">"Low-Low"</span><span class="ot">=</span><span class="st">"#E41A1C"</span>,</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>                <span class="co">#"High-Low"="#4DAF4A", "Low-High"="#984EA3",</span></span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Not significant"</span><span class="ot">=</span><span class="st">"gray"</span>),</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"LISA cluster type"</span></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"LISA cluster type (Metro Atlanta Area)"</span>)</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_Lisa1,map_Lisa1_Atl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="gam-model" class="level2">
+<h2 class="anchored" data-anchor-id="gam-model">GAM Model</h2>
+<p>A GAM model is fit with the six demographic predictor variables used above. The categorical density variable is used as an interaction term. The summary of the model is provided as well as the output of the cam.check() function for evaluating the model fit.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>gam4 <span class="ot">=</span> <span class="fu">gam</span>(demRatio <span class="sc">~</span> <span class="fu">s</span>(poverty,<span class="at">by=</span>densityCategory) <span class="sc">+</span> <span class="fu">s</span>(bachelors,<span class="at">by=</span>densityCategory) <span class="sc">+</span> <span class="fu">s</span>(hispanic,<span class="at">by=</span>densityCategory) <span class="sc">+</span>  <span class="fu">s</span>(grad,<span class="at">by=</span>densityCategory) <span class="sc">+</span> <span class="fu">s</span>(medIncome,<span class="at">by=</span>densityCategory) <span class="sc">+</span> <span class="fu">s</span>(black,<span class="at">by=</span>densityCategory), <span class="at">data=</span>precinctsInterpolated_rmNA,<span class="at">family=</span><span class="st">"quasibinomial"</span>,<span class="at">method =</span> <span class="st">"REML"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gam4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Family: quasibinomial 
+Link function: logit 
+
+Formula:
+demRatio ~ s(poverty, by = densityCategory) + s(bachelors, by = densityCategory) + 
+    s(hispanic, by = densityCategory) + s(grad, by = densityCategory) + 
+    s(medIncome, by = densityCategory) + s(black, by = densityCategory)
+
+Parametric coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   0.2358     0.0158   14.92   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Approximate significance of smooth terms:
+                                     edf Ref.df       F  p-value    
+s(poverty):densityCategoryhigh     1.001  1.001   1.405  0.23605    
+s(poverty):densityCategorylow      3.383  4.241   4.266  0.00151 ** 
+s(poverty):densityCategorymedium   3.119  3.921   1.842  0.12413    
+s(bachelors):densityCategoryhigh   3.262  4.104  16.020  &lt; 2e-16 ***
+s(bachelors):densityCategorylow    1.036  1.071  46.087  &lt; 2e-16 ***
+s(bachelors):densityCategorymedium 1.168  1.315 120.010  &lt; 2e-16 ***
+s(hispanic):densityCategoryhigh    2.374  3.021  74.901  &lt; 2e-16 ***
+s(hispanic):densityCategorylow     1.000  1.000  64.143  &lt; 2e-16 ***
+s(hispanic):densityCategorymedium  1.002  1.003 278.463  &lt; 2e-16 ***
+s(grad):densityCategoryhigh        2.595  3.301  48.054  &lt; 2e-16 ***
+s(grad):densityCategorylow         8.910  8.994  34.260  &lt; 2e-16 ***
+s(grad):densityCategorymedium      4.523  5.620  39.188  &lt; 2e-16 ***
+s(medIncome):densityCategoryhigh   3.085  3.919   1.621  0.16676    
+s(medIncome):densityCategorylow    1.003  1.006   0.634  0.42750    
+s(medIncome):densityCategorymedium 4.165  5.192   5.720 3.02e-05 ***
+s(black):densityCategoryhigh       1.001  1.002 842.509  &lt; 2e-16 ***
+s(black):densityCategorylow        7.055  8.021 273.864  &lt; 2e-16 ***
+s(black):densityCategorymedium     4.633  5.679 598.310  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+R-sq.(adj) =  0.897   Deviance explained = 88.7%
+-REML = -2790.8  Scale est. = 0.039235  n = 2611</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(gam4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Method: REML   Optimizer: outer newton
+full convergence after 12 iterations.
+Gradient range [-0.0008025089,0.007347097]
+(score -2790.772 &amp; scale 0.03923475).
+Hessian positive definite, eigenvalue range [5.002284e-05,1296.023].
+Model rank =  163 / 163 
+
+Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+indicate that k is too low, especially if edf is close to k'.
+
+                                     k'  edf k-index p-value
+s(poverty):densityCategoryhigh     9.00 1.00    1.03    0.94
+s(poverty):densityCategorylow      9.00 3.38    1.03    0.91
+s(poverty):densityCategorymedium   9.00 3.12    1.03    0.91
+s(bachelors):densityCategoryhigh   9.00 3.26    0.99    0.21
+s(bachelors):densityCategorylow    9.00 1.04    0.99    0.24
+s(bachelors):densityCategorymedium 9.00 1.17    0.99    0.28
+s(hispanic):densityCategoryhigh    9.00 2.37    1.01    0.67
+s(hispanic):densityCategorylow     9.00 1.00    1.01    0.72
+s(hispanic):densityCategorymedium  9.00 1.00    1.01    0.69
+s(grad):densityCategoryhigh        9.00 2.60    1.02    0.83
+s(grad):densityCategorylow         9.00 8.91    1.02    0.82
+s(grad):densityCategorymedium      9.00 4.52    1.02    0.77
+s(medIncome):densityCategoryhigh   9.00 3.08    0.99    0.30
+s(medIncome):densityCategorylow    9.00 1.00    0.99    0.27
+s(medIncome):densityCategorymedium 9.00 4.16    0.99    0.29
+s(black):densityCategoryhigh       9.00 1.00    0.99    0.31
+s(black):densityCategorylow        9.00 7.05    0.99    0.30
+s(black):densityCategorymedium     9.00 4.63    0.99    0.34</code></pre>
+</div>
+</div>
+<p>Marginal effect plots are provided for the six variables below.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">plot_predictions</span>(gam4, <span class="at">condition=</span><span class="fu">c</span>(<span class="st">"black"</span>,<span class="st">"densityCategory"</span>),<span class="at">points=</span><span class="fl">0.1</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Marginal Effect of Black Population Ratio"</span>) <span class="sc">|</span> <span class="fu">plot_predictions</span>(gam4, <span class="at">condition=</span><span class="fu">c</span>(<span class="st">"hispanic"</span>,<span class="st">"densityCategory"</span>),<span class="at">points=</span><span class="fl">0.1</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Marginal Effect of Hispanic Population Ratio"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>All plots show the general trend that the densest areas trend Democratic, the least dense areas trend Republican, and the intermediate areas vote similarly intermediate. The black and Hispanic population ratio show a clear positive correlation with the democratic vote ratio across all three density groups and across all densities, a high black or hispanic population ratio is correlated with a higher democratic voting share. The relationship is not entirely linear, with a plateau occurring at the highest black population ratios.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">plot_predictions</span>(gam4, <span class="at">condition=</span><span class="fu">c</span>(<span class="st">"bachelors"</span>,<span class="st">"densityCategory"</span>),<span class="at">points=</span><span class="fl">0.1</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Marginal Effect of Bachelors Degree Ratio"</span>) <span class="sc">|</span> <span class="fu">plot_predictions</span>(gam4, <span class="at">condition=</span><span class="fu">c</span>(<span class="st">"grad"</span>,<span class="st">"densityCategory"</span>),<span class="at">points=</span><span class="fl">0.1</span>)<span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Marginal Effect of Graduate Degree Ratio"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Likewise, the two education variables appear to have a positive correlation across all groups, though the graduate degree variable appears to not fit well to the low density category, especially for high graduate degree ratios, likely because of the small number of rural precincts with a high ratio of graduate degree-holders. The relationships here show some non-linear relations, with a slight U shape visible in some of the density of categories.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">plot_predictions</span>(gam4, <span class="at">condition=</span><span class="fu">c</span>(<span class="st">"poverty"</span>,<span class="st">"densityCategory"</span>),<span class="at">points=</span><span class="fl">0.1</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Marginal Effect of Poverty Ratio"</span>) <span class="sc">|</span> <span class="fu">plot_predictions</span>(gam4, <span class="at">condition=</span><span class="fu">c</span>(<span class="st">"medIncome"</span>,<span class="st">"densityCategory"</span>),<span class="at">points=</span><span class="fl">0.1</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Marginal Effect of Median Income"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The two income-related variables do not show a decisive conclusion. These did not all achieve significance when fitting the model and the relation is not clear. These relationships appear to be non-linear with some U-shaped correlations apparent. For example, in the low-density group increasing poverty appears to be correlate with more Republican votes at the lower ratios, though at higher ratios, the relationship reverses, though there is a high amount of error in this trend at higher ratios. By contrast, at the higher density categories, there is a more constant upward trend. The effects of median income also differ by density group. At the low densities, a very slight downward trend in democratic voting ratio is apparent with increasing income; however, this trend was not found to achieve significance. The medium density shows a downward trend in democratic voting ratio with increasing income, while the high density category shows a wavy pattern: first decreasing, then increasing, finally slightly decreasing again, but overall not showing dramatic changes.</p>
+<section id="model-residuals" class="level3">
+<h3 class="anchored" data-anchor-id="model-residuals">Model Residuals</h3>
+<p>The residuals of the GAM model are plotted below. The residuals are not extreme except for one outlier precinct.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA<span class="sc">$</span>resids2 <span class="ot">=</span> gam4<span class="sc">$</span>residuals</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>map_Resids2 <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"resids2"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>)))<span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"residual values of linear model"</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>map_Resids2_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA, <span class="at">bbox =</span> metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"resids2"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>)))<span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"residual values of linear model (Metropolitan Atlanta"</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_Resids2,map_Resids2_Atl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A Moran’s I test is run on the residuals. The hypothesis test indicates that the residuals show spatial distribution at a very small p-value.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(<span class="fu">resid</span>(gam4), ww)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Moran I test under randomisation
+
+data:  resid(gam4)  
+weights: ww    
+
+Moran I statistic standard deviate = 18.284, p-value &lt; 2.2e-16
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance 
+     0.2116707355     -0.0003831418      0.0001345076 </code></pre>
+</div>
+</div>
+<p>A Local Moran’s I is run on the residuals. The residuals do not show as clear a spatial distribution as the response variable, but there are still areas that have a clear spatial correlation, such as the downtown area of Atlanta and the southern portion of the state.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>local_I2 <span class="ot">=</span> <span class="fu">localmoran</span>(<span class="fu">resid</span>(gam4), ww, <span class="at">alternative=</span><span class="st">"two.sided"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA<span class="sc">$</span>Local_I2 <span class="ot">=</span> local_I2[, <span class="st">"Ii"</span>]</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA<span class="sc">$</span>Local_I_p2 <span class="ot">=</span> local_I2[, <span class="st">"Pr(z != E(Ii))"</span>]</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>map_Morans3 <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"Local_I2"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>())<span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Local Moran's I"</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>map_Morans3_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA, <span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"Local_I2"</span>, <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>())<span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span><span class="fu">tm_title</span>(<span class="st">"Local Moran's I (Metropolitan Atlanta)"</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_Morans3, map_Morans3_Atl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When mapping the clusters of the residuals, the general trend is similar to the clustering of the response variable itself, with Downtown Atlanta trending Democratic and Southern Georgia trending Republican. Clearly the model failed to capture all of the variance of the response variable.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>z2 <span class="ot">=</span> <span class="fu">scale</span>(precinctsInterpolated_rmNA<span class="sc">$</span>resids2, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)[,<span class="dv">1</span>]</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>lag_z2 <span class="ot">=</span> <span class="fu">lag.listw</span>(ww, z2)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA <span class="ot">&lt;-</span> precinctsInterpolated_rmNA <span class="sc">%&gt;%</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">LISA_type2 =</span> <span class="fu">case_when</span>(</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>      z2 <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> lag_z2 <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"High-High"</span>,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>      z2 <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> lag_z2 <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"Low-Low"</span>,</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>      z2 <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> lag_z2 <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"High-Low"</span>,</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>      z2 <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> lag_z2 <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"Low-High"</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA<span class="sc">$</span>LISA_type2 <span class="ot">=</span> <span class="fu">ifelse</span>(precinctsInterpolated_rmNA<span class="sc">$</span>Local_I_p2 <span class="sc">&lt;=</span> <span class="fl">0.05</span>, precinctsInterpolated_rmNA<span class="sc">$</span>LISA_type2, <span class="st">"Not significant"</span>)</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>map_Lisa2 <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA) <span class="sc">+</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LISA_type2"</span>,</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"High-High"</span><span class="ot">=</span><span class="st">"#377EB8"</span>, <span class="st">"Low-Low"</span><span class="ot">=</span><span class="st">"#E41A1C"</span>,</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">"High-Low"</span><span class="ot">=</span><span class="st">"#4DAF4A"</span>, <span class="st">"Low-High"</span><span class="ot">=</span><span class="st">"#984EA3"</span>,</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Not significant"</span><span class="ot">=</span><span class="st">"gray"</span>),</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"LISA cluster type"</span></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>map_Lisa2_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA, <span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span></span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(</span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LISA_type2"</span>,</span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"High-High"</span><span class="ot">=</span><span class="st">"#377EB8"</span>, <span class="st">"Low-Low"</span><span class="ot">=</span><span class="st">"#E41A1C"</span>,</span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>                <span class="st">"High-Low"</span><span class="ot">=</span><span class="st">"#4DAF4A"</span>, <span class="st">"Low-High"</span><span class="ot">=</span><span class="st">"#984EA3"</span>,</span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Not significant"</span><span class="ot">=</span><span class="st">"gray"</span>),</span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"LISA cluster type"</span></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>()</span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_Lisa2, map_Lisa2_Atl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sar-and-car-models" class="level2">
+<h2 class="anchored" data-anchor-id="sar-and-car-models">SAR and CAR Models</h2>
+<p>Below, an SAR and CAR model are used to fit the dataset. While both models visually appear to fit the data well, it is not a perfect fit. (e.g., the maximum predicted ratio is over 1.)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>SAR_error <span class="ot">=</span> <span class="fu">spautolm</span>(demRatio <span class="sc">~</span> density <span class="sc">+</span> poverty <span class="sc">+</span> bachelors <span class="sc">+</span> grad <span class="sc">+</span> black <span class="sc">+</span>  hispanic,</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data=</span>precinctsInterpolated_rmNA,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">listw =</span> ww,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">family =</span> <span class="st">"SAR"</span>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(SAR_error)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call: spautolm(formula = demRatio ~ density + poverty + bachelors + 
+    grad + black + hispanic, data = precinctsInterpolated_rmNA, 
+    listw = ww, family = "SAR")
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.3945920 -0.0437380 -0.0045629  0.0415677  0.4256343 
+
+Coefficients: 
+              Estimate Std. Error z value  Pr(&gt;|z|)
+(Intercept) 1.7478e-01 1.1888e-02 14.7021 &lt; 2.2e-16
+density     1.4231e-05 2.7859e-06  5.1084 3.249e-07
+poverty     5.8719e-02 2.2393e-02  2.6222  0.008737
+bachelors   2.0710e-01 2.7045e-02  7.6578 1.887e-14
+grad        2.2851e-01 3.1167e-02  7.3319 2.269e-13
+black       6.8909e-01 1.2847e-02 53.6382 &lt; 2.2e-16
+hispanic    4.0029e-01 2.6630e-02 15.0315 &lt; 2.2e-16
+
+Lambda: 0.79629 LR test value: 632.05 p-value: &lt; 2.22e-16 
+Numerical Hessian standard error of lambda: 0.016841 
+
+Log likelihood: 2633.044 
+ML residual variance (sigma squared): 0.0066787, (sigma: 0.081723)
+Number of observations: 2611 
+Number of parameters estimated: 9 
+AIC: -5248.1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(<span class="fu">resid</span>(SAR_error), ww)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Moran I test under randomisation
+
+data:  resid(SAR_error)  
+weights: ww    
+
+Moran I statistic standard deviate = -7.7839, p-value = 1
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance 
+    -0.0906354388     -0.0003831418      0.0001344371 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA<span class="sc">$</span>SAR_trend_fit <span class="ot">=</span> SAR_error<span class="sc">$</span>fit<span class="sc">$</span>signal_trend</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA<span class="sc">$</span>SAR_stochastic_fit <span class="ot">=</span> SAR_error<span class="sc">$</span>fit<span class="sc">$</span>signal_trend <span class="sc">+</span> SAR_error<span class="sc">$</span>fit<span class="sc">$</span>signal_stochastic</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>map_SAR <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA) <span class="sc">+</span> <span class="fu">tm_fill</span>(</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill=</span><span class="fu">c</span>(<span class="st">"SAR_trend_fit"</span>,<span class="st">"SAR_stochastic_fit"</span>), <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="fl">0.5</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> <span class="fu">tm_facets</span>(<span class="at">free.scales =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>,<span class="st">"top"</span>)) <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"SAR Model"</span>)</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>map_SAR_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA, <span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill=</span><span class="fu">c</span>(<span class="st">"SAR_trend_fit"</span>,<span class="st">"SAR_stochastic_fit"</span>), <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="fl">0.5</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> <span class="fu">tm_facets</span>(<span class="at">free.scales =</span> <span class="cn">FALSE</span>)<span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"SAR Model (Metro Atlanta)"</span>)</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_SAR,map_SAR_Atl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>CAR <span class="ot">=</span> <span class="fu">spautolm</span>(demRatio <span class="sc">~</span>density <span class="sc">+</span> poverty <span class="sc">+</span>  bachelors <span class="sc">+</span> grad <span class="sc">+</span> black <span class="sc">+</span>  hispanic,</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data=</span>precinctsInterpolated_rmNA,</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">listw =</span> ww,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">family =</span> <span class="st">"CAR"</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(CAR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call: spautolm(formula = demRatio ~ density + poverty + bachelors + 
+    grad + black + hispanic, data = precinctsInterpolated_rmNA, 
+    listw = ww, family = "CAR")
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.3874141 -0.0447034 -0.0043321  0.0383867  0.4670566 
+
+Coefficients: 
+               Estimate  Std. Error z value  Pr(&gt;|z|)
+(Intercept)  2.8038e-01  1.2014e-02 23.3379 &lt; 2.2e-16
+density     -5.9744e-06  2.7891e-06 -2.1420   0.03219
+poverty      1.4599e-01  2.3032e-02  6.3384 2.321e-10
+bachelors    1.4337e-01  2.7724e-02  5.1713 2.324e-07
+grad         3.2585e-01  3.1863e-02 10.2267 &lt; 2.2e-16
+black        6.3803e-01  1.2691e-02 50.2737 &lt; 2.2e-16
+hispanic     3.6109e-01  2.6543e-02 13.6042 &lt; 2.2e-16
+
+Lambda: 0.95869 LR test value: 664.61 p-value: &lt; 2.22e-16 
+Numerical Hessian standard error of lambda: NaN 
+
+Log likelihood: 2649.322 
+ML residual variance (sigma squared): 0.006678, (sigma: 0.081719)
+Number of observations: 2611 
+Number of parameters estimated: 9 
+AIC: -5280.6</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(<span class="fu">resid</span>(CAR), ww)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Moran I test under randomisation
+
+data:  resid(CAR)  
+weights: ww    
+
+Moran I statistic standard deviate = -16.722, p-value = 1
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance 
+    -0.1942324090     -0.0003831418      0.0001343913 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA<span class="sc">$</span>CAR_trend_fit <span class="ot">=</span> CAR<span class="sc">$</span>fit<span class="sc">$</span>signal_trend</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>precinctsInterpolated_rmNA<span class="sc">$</span>CAR_stochastic_fit <span class="ot">=</span> CAR<span class="sc">$</span>fit<span class="sc">$</span>signal_trend <span class="sc">+</span> CAR<span class="sc">$</span>fit<span class="sc">$</span>signal_stochastic</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>map_CAR <span class="ot">=</span><span class="fu">tm_shape</span>(precinctsInterpolated_rmNA) <span class="sc">+</span> <span class="fu">tm_fill</span>(</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill=</span><span class="fu">c</span>(<span class="st">"CAR_trend_fit"</span>,<span class="st">"CAR_stochastic_fit"</span>), <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="fl">0.5</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>,<span class="st">"top"</span>))<span class="sc">+</span> <span class="fu">tm_facets</span>(<span class="at">free.scales =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"CAR Model"</span>)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>map_CAR_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(precinctsInterpolated_rmNA, <span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill=</span><span class="fu">c</span>(<span class="st">"CAR_trend_fit"</span>,<span class="st">"CAR_stochastic_fit"</span>), <span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="fl">0.5</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> <span class="fu">tm_facets</span>(<span class="at">free.scales =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"CAR Model (Metro Atlanta)"</span>)</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_CAR,map_CAR_Atl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Both models achieved approximately equal AIC and log-likelihood.</p>
+</section>
+<section id="geographic-weighted-regression" class="level2">
+<h2 class="anchored" data-anchor-id="geographic-weighted-regression">Geographic Weighted Regression</h2>
+<p>For the geographic weighted regression, the predicted variable is pct_dem_lead. This is the percentage difference in overall votes between Democratic and Republican votes, where 100 would be all democratic votes, -100 would be all republican votes, and 0 would be an even split. This is done so that the regression coefficients will be positive if correlated with Democratic votes and negative if correlated with Republican votes.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>bw <span class="ot">&lt;-</span> <span class="fu">bw.gwr</span>(pct_dem_lead <span class="sc">~</span> medIncome<span class="sc">+</span> poverty <span class="sc">+</span> bachelors <span class="sc">+</span> grad <span class="sc">+</span> black <span class="sc">+</span> hispanic,</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data=</span>precinctsInterpolated_rmNA,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">approach =</span> <span class="st">"CV"</span>,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">kernel =</span> <span class="st">"gaussian"</span>,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">adaptive =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>gwr_mod <span class="ot">=</span> <span class="fu">gwr.basic</span>(pct_dem_lead <span class="sc">~</span> medIncome<span class="sc">+</span> poverty <span class="sc">+</span> bachelors <span class="sc">+</span> grad <span class="sc">+</span> black  <span class="sc">+</span>  hispanic,</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data=</span>precinctsInterpolated_rmNA,</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">bw =</span> bw,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">kernel =</span> <span class="st">"gaussian"</span>,</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">adaptive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(gwr_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   ***********************************************************************
+   *                       Package   GWmodel                             *
+   ***********************************************************************
+   Program starts at: 2026-11-09 16:24:53.379282 
+   Call:
+   gwr.basic(formula = pct_dem_lead ~ medIncome + poverty + bachelors + 
+    grad + black + hispanic, data = precinctsInterpolated_rmNA, 
+    bw = bw, kernel = "gaussian", adaptive = TRUE)
+
+   Dependent (y) variable:  pct_dem_lead
+   Independent variables:  medIncome poverty bachelors grad black hispanic
+   Number of data points: 2611
+   ***********************************************************************
+   *                    Results of Global Regression                     *
+   ***********************************************************************
+
+   Call:
+    lm(formula = formula, data = data)
+
+   Residuals:
+   Min     1Q Median     3Q    Max 
+-86.56 -12.72   0.00  11.47  79.58 
+
+   Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+   (Intercept) -1.077e+02  1.702e+00 -63.248  &lt; 2e-16 ***
+   medIncome   -1.284e-05  2.079e-05  -0.618    0.537    
+   poverty      3.015e+01  5.262e+00   5.730 1.12e-08 ***
+   bachelors    1.179e+02  5.981e+00  19.713  &lt; 2e-16 ***
+   grad         1.428e+02  7.039e+00  20.285  &lt; 2e-16 ***
+   black        1.739e+02  1.695e+00 102.593  &lt; 2e-16 ***
+   hispanic     1.397e+02  4.559e+00  30.635  &lt; 2e-16 ***
+
+   ---Significance stars
+   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+   Residual standard error: 21.17 on 2604 degrees of freedom
+   Multiple R-squared: 0.8503
+   Adjusted R-squared:  0.85 
+   F-statistic:  2466 on 6 and 2604 DF,  p-value: &lt; 2.2e-16 
+   ***Extra Diagnostic information
+   Residual sum of squares: 1167561
+   Sigma(hat): 21.15449
+   AIC:  23360.47
+   AICc:  23360.52
+   BIC:  20859.35
+   ***********************************************************************
+   *          Results of Geographically Weighted Regression              *
+   ***********************************************************************
+
+   *********************Model calibration information*********************
+   Kernel function: gaussian 
+   Adaptive bandwidth: 20 (number of nearest neighbours)
+   Regression points: the same locations as observations are used.
+   Distance metric: Euclidean distance metric is used.
+
+   ****************Summary of GWR coefficient estimates:******************
+                    Min.     1st Qu.      Median     3rd Qu.     Max.
+   Intercept -1.3701e+02 -9.8723e+01 -7.4993e+01 -3.3697e+01  86.6736
+   medIncome -4.7826e-04 -1.4176e-04 -6.5664e-05  3.8125e-06   0.0005
+   poverty   -1.0450e+02 -3.1097e+00  1.6449e+01  4.0173e+01 178.4883
+   bachelors -7.3821e+01  2.1217e+01  6.7787e+01  1.0190e+02 237.5698
+   grad      -1.2814e+02  1.4278e+01  5.5183e+01  8.7552e+01 244.0721
+   black      1.2359e+01  1.1323e+02  1.5710e+02  1.7905e+02 281.6678
+   hispanic  -4.6416e+01  5.3350e+01  8.8868e+01  1.2099e+02 233.5381
+   ************************Diagnostic information*************************
+   Number of data points: 2611 
+   Effective number of parameters (2trace(S) - trace(S'S)): 522.2479 
+   Effective degrees of freedom (n-2trace(S) + trace(S'S)): 2088.752 
+   AICc (GWR book, Fotheringham, et al. 2002, p. 61, eq 2.33): 21868.31 
+   AIC (GWR book, Fotheringham, et al. 2002,GWR p. 96, eq. 4.22): 21363.76 
+   BIC (GWR book, Fotheringham, et al. 2002,GWR p. 61, eq. 2.34): 21330.65 
+   Residual sum of squares: 473570.8 
+   R-square value:  0.9392999 
+   Adjusted R-square value:  0.9241159 
+
+   ***********************************************************************
+   Program stops at: 2026-11-09 16:24:55.249721 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>map_GWRblack <span class="ot">=</span> <span class="fu">tm_shape</span>(gwr_mod<span class="sc">$</span>SDF) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"black"</span>,<span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))) <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Black Population Ratio GWR Coefficients"</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>map_GWRblack_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(gwr_mod<span class="sc">$</span>SDF,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"black"</span>,<span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>)))<span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Black Population Ratio GWR Coefficients (Metro Atlanta)"</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>map_GWRhisp <span class="ot">=</span> <span class="fu">tm_shape</span>(gwr_mod<span class="sc">$</span>SDF) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"hispanic"</span>,<span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))) <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Hispanic Population Ratio GWR Coefficients"</span>)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>map_GWRhisp_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(gwr_mod<span class="sc">$</span>SDF,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"hispanic"</span>,<span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))) <span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Hispanic Population Ratio GWR Coefficients (Metro Atlanta)"</span>)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_GWRblack,map_GWRblack_Atl,map_GWRhisp,map_GWRhisp_Atl,<span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The GWR coefficients for both black population ratio and hispanic population ratio are overwhelmingly positive throughout the state. This is in line with the results of the GAM model, where higher black and Hispanic population ratios were a reliable predictor of democratic voting. While never going negative, the coefficients for the black population ratio are lowest in the Atlanta Metro where the black population ratio is the highest. This matches the findings of the GAM, where the variable is nonlinear at the highest ratios and the marginal effect plateaus. Likewise, the coefficient of the hispanic variable goes slightly negative in this area. This is likely because the black population ratio approach 1 in this area and so a higher hispanic population would mean a lower black population.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>map_GWRbachelors <span class="ot">=</span> <span class="fu">tm_shape</span>(gwr_mod<span class="sc">$</span>SDF) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"bachelors"</span>,<span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))) <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Bachelors Ratio GWR Coefficients"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>map_GWRbachelors_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(gwr_mod<span class="sc">$</span>SDF,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"bachelors"</span>,<span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))) <span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Bachelors Ratio GWR Coefficients (Metro Atlanta)"</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>map_GWRgrad <span class="ot">=</span> <span class="fu">tm_shape</span>(gwr_mod<span class="sc">$</span>SDF) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"grad"</span>,<span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))) <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Graduate Degree Ratio GWR Coefficients"</span>)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>map_GWRgrad_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(gwr_mod<span class="sc">$</span>SDF,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"grad"</span>,<span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))) <span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Graduate Degree Ratio GWR Coefficients (Metro Atlanta)"</span>)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_GWRbachelors, map_GWRbachelors_Atl, map_GWRgrad, map_GWRgrad_Atl, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The two education variables do not show as strong a relation to voting as the black and hispanic ratios, however it does appear that through most of the state higher education is correlated with a larger Democratic vote share. However, there are some areas, particularly in Southern Georgia and for graduate degrees, where higher education is correlated with a higher Republican vote share. However, it is possible that this is due to variance because these rural areas have a lower graduate degree ratio. Another area of note is the cluster in North Atlanta where bachelors degree ratio predicts Republican voting - this is the same area which had a cluster of high education, high income, and low black population ratio.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>map_GWRincome <span class="ot">=</span> <span class="fu">tm_shape</span>(gwr_mod<span class="sc">$</span>SDF) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"medIncome"</span>,<span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))) <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Median Income  GWR Coefficients"</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>map_GWRincome_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(gwr_mod<span class="sc">$</span>SDF,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"medIncome"</span>,<span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>)))<span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Median Income GWR Coefficients (Metro Atlanta)"</span>)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>map_GWRpoverty <span class="ot">=</span> <span class="fu">tm_shape</span>(gwr_mod<span class="sc">$</span>SDF) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"poverty"</span>,<span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>))) <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Poverty Ratio GWR Coefficients"</span>)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>map_GWRpoverty_Atl <span class="ot">=</span> <span class="fu">tm_shape</span>(gwr_mod<span class="sc">$</span>SDF,<span class="at">bbox=</span>metroATL_bb) <span class="sc">+</span> <span class="fu">tm_fill</span>(<span class="at">fill=</span><span class="st">"poverty"</span>,<span class="at">fill.scale=</span><span class="fu">tm_scale_continuous</span>(<span class="at">midpoint=</span><span class="dv">0</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"white"</span>,<span class="st">"blue"</span>)))<span class="sc">+</span> <span class="fu">tm_shape</span>(metroATL) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span> <span class="fu">tm_title</span>(<span class="st">"Poverty Ratio GWR Coefficients (Metro Atlanta)"</span>)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_GWRincome, map_GWRincome_Atl, map_GWRpoverty, map_GWRpoverty_Atl, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FinalProject_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Finally, the two income related maps show a high degree of spatial variance. In some areas, high income appears to predict Republican voting while poverty predicts Democratic voting, while in other areas this relationship is switched. In other areas, both high income and high poverty appear to predict voting for the same party. This appears to be in line with the results of the GAM regression, where it was found that these economic predictors are highly non-linear.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>The overall analysis of Moran’s I and spatial autoregression models shows that there is a strong spatial component to the voting distribution in Georgia. While this analysis has shown that a lot of this spatial distribution is due to the urban/rural divide between Metro Atlanta and the rest of the state, there does still appear to be further unaccounted for spatial pattern.</p>
+<p>It was found that the relation of the six demograpghic variables to voting outcome differed across different areas. The black population ratio and hispanic population ratio were found to correlate with a higher Democratic voting share across all areas. Education also predicted Democratic voting share, though not as strongly as race. The GWR model showed that there were some areas where a higher education was correlated with a higher Republican vote share. Finally, the income variables were found to have a high degree of variance. The GAM regression showed that their relation to voting may be highly nonlinear and dependent on urban/rural/intermediate status and the GWR model shows a strong spatial variance in their correlation with vote share, being correlated with different parties in different areas.</p>
+<p>In conclusion, the data presented in this report shows that the relation between demographic data and partisan voting outcomes is highly mediated by the particularities of geographic location – both in terms of that location’s urban, rural, or intermediate status, and in terms of its spatial relation to other areas. There is the possibility that some of these particularities are due to irreducible cultural or historical characteristics specific to geographic locality. This report has shown that much more can be learned by studying the particularity and nuance of these geographic locals and indicates any analysis of partisan voting patterns should consider these particularities of locality.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
